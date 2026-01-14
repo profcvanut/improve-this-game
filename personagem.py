@@ -1,35 +1,42 @@
 class Personagem:
-    """
-    A classe Personagem representa um personagem genérico em um jogo.
-    """
-    def __init__(self, nome, idade, vida):
+    def __init__(self, nome, vida, defesa, ataque, bondade, estatos):
+        self.estatos = estatos
+        self.bondade = bondade
         self.nome = nome
-        self.idade = idade
+        self.defesa = defesa
+        self.ataque = ataque
         self.vida = vida
-
-    def upgrade_vida(self, incremento=10):
-        """
-        Aumenta a vida do personagem. O valor padrão de incremento é 10.
-        """
-        self.vida += incremento
-        print(f'Vida de {self.nome} após upgrade: {self.vida}')
-
-
-    def downgrade_vida(self):
-        """
-        Reduz a vida do personagem, garantindo que não fique negativa.
-        """
-        if self.vida > 15:
-            self.vida -= 15
-        else:
-            self.vida = 0
-        print(f'Vida de {self.nome} após downgrade: {self.vida}')
+        self.vidabase = vida
+        self.ataquebase = ataque
+        self.defesabase = defesa
+        self.itens = [{'item': 'poção vermelha', 'qnt': 3}, 
+                      {'item': 'poção azul', 'qnt': 3}, 
+                      {'item': 'poção verde', 'qnt': 3}]
 
     def update_nome(self, nome_editado):
-        """
-        Atualiza o nome do personagem.
-        """
+        
         self.nome = nome_editado
+    
+    def upgrade_vida(self, incremento):
+        self.vida += incremento
+    
+    def downgrade_bondade(self, diminuir):
+        self.bondade -= diminuir
+        if self.bondade <= -10:
+            self.bondade = -10
+
+    def update_bondade(self, aumentar):
+        self.bondade += aumentar
+        if self.bondade >= 10:
+            self.bondade = 10
+    
+    def morrer(self):
+        self.estatos = 2
+
+    def ganhar_itens(self):
+        self.itens[0]['qnt'] += 2
+        self.itens[1]['qnt'] += 2
+        self.itens[2]['qnt'] += 2
 
     def __str__(self):
-        return f'Personagem: {self.nome}, Idade: {self.idade}, Vida: {self.vida}'
+        return f'Personagem: {self.nome}, Vida: {self.vida}, Bondade: {self.bondade}, Itens: {self.itens}'
